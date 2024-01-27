@@ -87,11 +87,11 @@ export default function ActiveHoldings(){
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((data)=>(
-            <TableRow>
+            {data.map((data, index)=>(
+            <TableRow key={index}>
               <TableCell>{data.ticker}</TableCell>
               <TableCell>{data.companyName}</TableCell>
-              <TableCell className='flex gap-2'>{data.owners.map((owner)=>(<div>{owner}</div>))}</TableCell>
+              <TableCell className='flex gap-2'>{data.owners.map((owner, index)=>(<div key={index}>{owner}</div>))}</TableCell>
               <TableCell>{data.shares}</TableCell>
               <TableCell>{data.beta}</TableCell>
               <TableCell>{data.investmentDate}</TableCell>

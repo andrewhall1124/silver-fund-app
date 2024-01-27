@@ -104,12 +104,12 @@ export default function WorkInProgress(){
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((data)=>(
-              <Link legacyBehavior href={`pitch/${data.id}`}>
+            {data.map((data, index)=>(
+              <Link key={index} legacyBehavior href={`pitch/${data.id}`}>
                 <TableRow>
                   <TableCell>{data.ticker}</TableCell>
                   <TableCell>{data.companyName}</TableCell>
-                  <TableCell className='flex gap-2'>{data.owners.map((owner)=>(<div>{owner}</div>))}</TableCell>
+                  <TableCell className='flex gap-2'>{data.owners.map((owner, index)=>(<div key={index}>{owner}</div>))}</TableCell>
                   <TableCell>{data.beta}</TableCell>
                   <TableCell>${data.currentPrice}</TableCell>
                   <TableCell>${data.targetPrice}</TableCell>
