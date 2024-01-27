@@ -106,7 +106,7 @@ export default function WorkInProgress(){
           <TableBody>
             {data.map((data, index)=>(
               <Link key={index} legacyBehavior href={`pitch/${data.id}`}>
-                <TableRow>
+                <TableRow className="cursor-pointer">
                   <TableCell>{data.ticker}</TableCell>
                   <TableCell>{data.companyName}</TableCell>
                   <TableCell className='flex gap-2'>{data.owners.map((owner, index)=>(<div key={index}>{owner}</div>))}</TableCell>
