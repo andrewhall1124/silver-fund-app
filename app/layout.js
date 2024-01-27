@@ -5,13 +5,14 @@ import NavBar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 })
 export const metadata = {
-  title: "Title",
+  title: "Silver Fund App",
   description: "Created by Andrew Hall",
 };
 
@@ -25,8 +26,8 @@ const routes = [
 function Logo(){
   return(
     <Link href='/'>
-      <div className="font-bold">
-        Logo
+      <div className="text-3xl font-bold">
+        Silver Fund Portfolio
       </div>
     </Link>
   )
@@ -35,10 +36,10 @@ function Logo(){
 
 function Header(){
   return(
-    <div className="sticky top-0 flex justify-between p-4 bg-background/50 backdrop-blur-md">
+    <div className="sticky top-0 flex justify-between items-center p-4 bg-background/50 backdrop-blur-md z-[40]">
       <Logo/>
       <div className="flex gap-3">
-        <NavBar routes={routes}/>
+        {/* <NavBar routes={routes}/> */}
         <ModeToggle/>
       </div>
     </div>
@@ -61,6 +62,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >        
           <Header/>
+          <Separator/>
           {children}
         </ThemeProvider>
       </body>
