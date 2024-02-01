@@ -1,11 +1,11 @@
 import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import { cn } from "@/lib/utils"
-import NavBar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import {Navbar} from "@/components/layout/navbar";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,7 +27,7 @@ function Logo(){
   return(
     <Link href='/'>
       <div className="text-3xl font-bold">
-        Silver Fund Portfolio
+        Silver Fund App
       </div>
     </Link>
   )
@@ -39,7 +39,6 @@ function Header(){
     <div className="sticky top-0 flex justify-between items-center p-4 bg-background/50 backdrop-blur-md z-[40]">
       <Logo/>
       <div className="flex gap-3">
-        {/* <NavBar routes={routes}/> */}
         <ModeToggle/>
       </div>
     </div>
@@ -47,6 +46,16 @@ function Header(){
 }
 
 export default function RootLayout({ children }) {
+  const routes = [
+    {
+      label: "Active",
+      href:"/"
+    },
+    {
+      label: "Work in progress",
+      href:"wip"
+    },
+  ]
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -62,6 +71,8 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >        
           <Header/>
+          <Separator/>
+          <Navbar routes={routes}/>
           <Separator/>
           {children}
         </ThemeProvider>

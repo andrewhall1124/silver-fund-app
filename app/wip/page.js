@@ -8,11 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { MoreVertical } from "lucide-react"
 
-export default function WorkInProgress(){
+export default function Page(){
   const data = [
     {
       ticker: 'EA',
@@ -86,10 +86,15 @@ export default function WorkInProgress(){
     },
   ]
   return(
-    <div className="py-12">
-      <div className="text-3xl font-semibold">
-        Work in progress
-      </div>
+    <div className="py-8 px-24">
+        <div className="flex gap-8">
+          <div className="text-3xl font-semibold">
+            Work in progress
+          </div>
+          <Link href="/wip/add">
+            <Button>Add new</Button>
+          </Link>
+        </div>
       <div className="py-4">
         <Table>
           <TableHeader>
@@ -105,7 +110,7 @@ export default function WorkInProgress(){
           </TableHeader>
           <TableBody>
             {data.map((data, index)=>(
-              <Link key={index} legacyBehavior href={`pitch/${data.id}`}>
+              <Link key={index} legacyBehavior href={`wip/${data.id}`}>
                 <TableRow className="cursor-pointer">
                   <TableCell>{data.ticker}</TableCell>
                   <TableCell>{data.companyName}</TableCell>
