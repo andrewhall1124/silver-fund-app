@@ -12,9 +12,9 @@ import Link from "next/link"
 function Item({route}){
   return(
     <NavigationMenuItem>
-      <Link href={route.href} legacyBehavior passHref>
+      <Link href={`/${route.href}`} legacyBehavior passHref>
         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          {route.title}
+          {route.label}
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>
@@ -22,9 +22,9 @@ function Item({route}){
 }
 
 
-export default function NavBar({routes}){
+export  function Navbar({routes}){
   return(
-    <div>
+    <div className="py-2 px-24">
       <NavigationMenu>
         <NavigationMenuList>
           {routes.map((route, index)  => (
