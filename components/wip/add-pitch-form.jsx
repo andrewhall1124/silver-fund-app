@@ -9,20 +9,21 @@ import {
   Form,
 } from "@/components/ui/form"
 import { InputField } from "../form-fields/input-field"
-import { Plus } from "lucide-react"
-import { InputArrayField } from "../form-fields/input-array-field"
 
 export function AddPitchForm() {
   const [theses, setTheses] = useState([{
     placeholder: "Thesis 1",
     name: "thesis1",
     value: "",
+    id: 1,
   }]);
 
   const formSchema = z.object({
-    ticker: z.string().min(1).max(10),
-    companyName: z.string(),
+    ticker: z.string().min(1,"Required").max(10),
+    companyName: z.string().min(1,"Required"),
     thesis1: z.string(),
+    thesis2: z.string(),
+    thesis3: z.string(),
   })
 
   const form = useForm({
@@ -31,15 +32,15 @@ export function AddPitchForm() {
       ticker: "",
       companyName: "",
       thesis1: "",
+      thesis2: "",
+      thesis3: "",
     },
   })
 
-  const addThesis = () =>{
-    setTheses([...theses, {
-      placeholder: `Thesis ${theses.length + 1}`,
-      name: `thesis${theses.length + 1}`,
-      value: "",
-    }])
+  const removeThesis = (id) =>{
+    setTheses(
+      theses.filter((thesis) => (thesis.id == id))
+    )
   }
  
   function onSubmit(values) {
@@ -62,14 +63,11 @@ export function AddPitchForm() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-              <div className="text-2xl font-semibold">Theses</div>
-                {theses.map((thesis,index)=>(
-                  <InputArrayField key={index} form={form} name={thesis.name} placeholder={thesis.placeholder}/>
-                ))}
-                <Button type='button' variant="outline" size="icon" onClick={addThesis}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
+            <div className="text-2xl font-semibold">Theses</div>
+            <InputField form={form} placeholder="Thesis 1" name="thesis1"/>
+            <InputField form={form} placeholder="Thesis 2" name="thesis2"/>
+            <InputField form={form} placeholder="Thesis 3" name="thesis3"/>
+          </div>
         </div>
         <Button type="submit">Submit</Button>
       </form>
