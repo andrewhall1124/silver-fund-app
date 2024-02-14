@@ -2,28 +2,22 @@
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Form,
 } from "@/components/ui/form"
 import { InputField } from "../form-fields/input-field"
+import { Minus, Plus } from "lucide-react"
+import { Input } from "../ui/input"
 
 export function AddPitchForm() {
-  const [theses, setTheses] = useState([{
-    placeholder: "Thesis 1",
-    name: "thesis1",
-    value: "",
-    id: 1,
-  }]);
+  const [theses, setTheses] = useState([""]);
 
   const formSchema = z.object({
     ticker: z.string().min(1,"Required").max(10),
     companyName: z.string().min(1,"Required"),
-    thesis1: z.string(),
-    thesis2: z.string(),
-    thesis3: z.string(),
   })
 
   const form = useForm({
@@ -31,22 +25,31 @@ export function AddPitchForm() {
     defaultValues: {
       ticker: "",
       companyName: "",
-      thesis1: "",
-      thesis2: "",
-      thesis3: "",
     },
   })
 
-  const removeThesis = (id) =>{
-    setTheses(
-      theses.filter((thesis) => (thesis.id == id))
-    )
+  const removeThesis = (index) =>{
+    const newTheses = theses.filter((_, i) => i !== index);
+    setTheses(newTheses);
+  }
+  
+  const addThesis = () =>{
+    setTheses([...theses,""]);
+  }
+
+  const handleThesisChange = (index, value) =>{
+    const newTheses = [...theses];
+    newTheses[index] = value;
+    setTheses(newTheses);
   }
  
   function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    const formData = {
+      ...values,
+      theses:theses.filter(thesis => thesis.trim() !== "") // Filter out empty theses
+    };
+    
+    console.log(formData);
   }
   return(
     <Form {...form}>
@@ -63,10 +66,20 @@ export function AddPitchForm() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="text-2xl font-semibold">Theses</div>
-            <InputField form={form} placeholder="Thesis 1" name="thesis1"/>
-            <InputField form={form} placeholder="Thesis 2" name="thesis2"/>
-            <InputField form={form} placeholder="Thesis 3" name="thesis3"/>
+            <div className="flex gap-4">
+              <div className="text-2xl font-semibold">Theses</div>
+              <Button variant='outline' size='icon' type='button' onClick={addThesis}>
+                <Plus/>
+              </Button>
+            </div>
+            {theses.map((thesis, index) =>(
+              <div className="flex gap-2" key={index}>
+                <Input value={thesis} onChange={(e) => handleThesisChange(index, e.target.value)} form={form} placeholder={`Thesis ${index + 1}`}/>
+                <Button variant='outline' size='icon' type='button' onClick={()=>removeThesis(index)}>
+                  <Minus/>
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
         <Button type="submit">Submit</Button>
